@@ -51,7 +51,6 @@ button {
 .maincontainer button {
   padding: 10px;
   border: none;
-  width: 95%;
   margin: 10px;
   background-color: #007bff;
   color: white;
@@ -63,9 +62,19 @@ button {
   background-color: #0056b3;
 }
 
+#switchlink {
+  color: rgb(207, 207, 207);
+  font-size: 12px;
+  transition: 0.2s ease;
+}
+
+#switchlink:hover {
+  color: rgb(167, 167, 167);
+}
+
 @media screen and (max-width: 450px) {
   .maincontainer {
     max-width: 280px;
-    margin-left: -20px;
+    margin-left: -15px;
   }
 }
