@@ -1,0 +1,71 @@
+body,
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  height: 100%;
+  background: url("background4.jpg") no-repeat center center/cover;
+  z-index: -1;
+}
+
+.parentmaincontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.maincontainer {
+  background: rgba(255, 255, 255, 0.143);
+  border-radius: 5px;
+  padding: 25px;
+  margin-left: -20px;
+  max-width: 320px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  height: fit-content;
+  backdrop-filter: blur(5px);
+}
+
+.maincontainer img {
+  width: 100px;
+  height: auto;
+  margin: 10px;
+}
+.maincontainer h1 {
+  font-size: 16px;
+  color: #003670;
+}
+
+.maincontainer input,
+button {
+  width: 90%;
+  background-color: #ffffffb4;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+}
+
+.maincontainer button {
+  padding: 10px;
+  border: none;
+  width: 95%;
+  margin: 10px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.maincontainer button:hover {
+  background-color: #0056b3;
+}
+
+@media screen and (max-width: 450px) {
+  .maincontainer {
+    max-width: 280px;
+    margin-left: -20px;
+  }
+}
