@@ -147,6 +147,14 @@
 </body>
 
 <script>
+    function loadHomePage() {
+        if (confirm("Go to the home page?")) {
+            window.location.href = 'index.html';
+        }
+    }
+</script>
+
+<script>
     document.getElementById("signoutBtn").addEventListener("click", function() {
         if (confirm("Are you sure you want to sign out?")) {
             localStorage.removeItem('student-creds');
@@ -443,7 +451,7 @@ checkUserCredentials();
                         });
                     });
                 } else {
-                    coursesListDiv.innerHTML = '<p>No courses found.</p>';
+                    coursesListDiv.innerHTML = '<p>No courses available</p>';
                 }
             }, {
                 onlyOnce: true // This ensures it fetches the data only once initially
@@ -529,7 +537,7 @@ checkUserCredentials();
                     });
 
                 } else {
-                    moduleListDiv.innerHTML = '<p>No modules found.</p>';
+                    moduleListDiv.innerHTML = '<p>No modules available</p>';
                 }
             }, {
                 onlyOnce: true // This ensures it fetches the data only once initially
@@ -717,7 +725,7 @@ checkUserCredentials();
                         });
                     });
                 } else {
-                    coursesQuizListDiv.innerHTML = '<p>No courses quiz available.</p>';
+                    coursesQuizListDiv.innerHTML = '<p>No courses available.</p>';
                 }
             });
         }
@@ -804,7 +812,7 @@ checkUserCredentials();
                     });
 
                 } else {
-                    quizListDiv.innerHTML = '<p>No quizzes found.</p>';
+                    quizListDiv.innerHTML = '<p>No quiz available</p>';
                 }
             }, {
                 onlyOnce: true // This ensures it fetches the data only once initially

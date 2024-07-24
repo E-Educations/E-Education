@@ -61,6 +61,8 @@
             });
         });
     </script>
+
+
   </head>
   <body>
     <div class="background"></div>
@@ -81,7 +83,14 @@
           <br />
           <button type="submit">Register</button>
         </form>
+        <button id="backbtn">Back</button>
       </div>
     </div>
   </body>
+
+  <script>
+  document.getElementById("backbtn").addEventListener("click", function() {
+    history.back();
+  });
+</script>
 </html>
