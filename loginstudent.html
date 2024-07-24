@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Student</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+        } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+        import {
+            getDatabase,
+            ref,
+            get,
+        } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFPqlKDzotCLgx76iduCm0eV1iXBffwpI",
+            authDomain: "e-educations.firebaseapp.com",
+            databaseURL:
+                "https://e-educations-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "e-educations",
+            storageBucket: "e-educations.appspot.com",
+            messagingSenderId: "997162696452",
+            appId: "1:997162696452:web:35f578c90b4e2b44f29a51",
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        const database = getDatabase(app);
+
+        async function findAdminUid(studentUid) {
+            const usersRef = ref(database, 'users');
+            const snapshot = await get(usersRef);
+            if (snapshot.exists()) {
+                const usersData = snapshot.val();
+                for (const [adminUid, adminData] of Object.entries(usersData)) {
+                    if (adminData.student && adminData.student[studentUid]) {
+                        return adminUid;
+                    }
+                }
+            }
+            return null;
+        }
+
+        document.getElementById("loginForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                const studentUid = user.uid; // Assuming the student's UID is the same as the user's UID
+
+                const adminUid = await findAdminUid(studentUid);
+                if (adminUid) {
+                    const studentRef = ref(database, `users/${adminUid}/student/${studentUid}`);
+                    const studentSnapshot = await get(studentRef);
+                    if (studentSnapshot.exists()) {
+                        const studentData = studentSnapshot.val();
+                        const studentCreds = {
+                            uid: user.uid,
+                            email: email,
+                            password: password,
+                            username: studentData.username,
+                            adminUid: adminUid,
+                        };
+                        localStorage.setItem("student-creds", JSON.stringify(studentCreds));
+                        localStorage.setItem('studentlastClicked', 'accountcontainer');
+                        window.location.href = 'page2.html';
+                    } else {
+                        alert("No student data found.");
+                    }
+                } else {
+                    alert("Admin not found for the student.");
+                }
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="parentmaincontainer">
+        <div class="maincontainer">
+            <h1>Student</h1>
+            <img src="logo2.png" alt="Logo" />
+            <h1>Login to E-Education</h1>
+            <form id="loginForm">
+                <input type="email" id="email" placeholder="Email" required />
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Password"
+                    required
+                />
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

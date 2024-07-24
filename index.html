@@ -1,81 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Signup Page</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
     <link rel="stylesheet" href="styles.css" />
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-      import {
-        getAuth,
-        createUserWithEmailAndPassword,
-      } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-      import {
-        getDatabase,
-        ref,
-        set,
-      } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js";
+</head>
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyBFPqlKDzotCLgx76iduCm0eV1iXBffwpI",
-        authDomain: "e-educations.firebaseapp.com",
-        databaseURL:
-          "https://e-educations-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "e-educations",
-        storageBucket: "e-educations.appspot.com",
-        messagingSenderId: "997162696452",
-        appId: "1:997162696452:web:35f578c90b4e2b44f29a51",
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth();
-      const database = getDatabase(app);
-
-      document
-        .getElementById("signupForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const username = document.getElementById("username").value;
-          const email = document.getElementById("email").value;
-          const password = document.getElementById("password").value;
-
-          createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-              const user = userCredential.user;
-              set(ref(database, "users/" + user.uid), {
-                username: username,
-                email: email,
-              });
-              alert("User created successfully!");
-            })
-            .catch((error) => {
-              alert("Error: " + error.message);
-            });
-        });
-    </script>
-  </head>
-  <body>
+<body>
     <div class="background"></div>
     <div class="parentmaincontainer">
-      <div class="maincontainer">
-        <img src="logo2.png" alt="" />
-        <h1>Signup to E-Education</h1>
-        <form id="signupForm">
-          <input type="text" id="username" placeholder="Username" required />
-          <input type="email" id="email" placeholder="Email" required />
-          <input
-            type="password"
-            id="password"
-            placeholder="Password"
-            required
-          />
-          <br />
-          <button type="submit">Signup</button>
-          <a id="switchlink" href="login.html">Login here</a>
-        </form>
-      </div>
+        <div class="maincontainer" id="home">
+            <img src="logo2.png" alt="" />
+            <form id="homeForm">
+                <button type="button" id="loginBtn">Login</button>
+                <button type="button" id="studentloginBtn">Student Login</button>
+            </form>
+        </div>
     </div>
-  </body>
+
+    <script>
+        // Function to load user login page
+        function loadUserLogin(event) {
+            event.preventDefault();
+            window.location.href = 'loginuser.html';
+        }
+
+        // Function to load student login page
+        function loadStudentLogin(event) {
+            event.preventDefault();
+            window.location.href = 'loginstudent.html';
+        }
+
+        // Add event listeners to buttons after the DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginBtn = document.getElementById('loginBtn');
+            const studentLoginBtn = document.getElementById('studentloginBtn');
+
+            loginBtn.addEventListener('click', loadUserLogin);
+            studentLoginBtn.addEventListener('click', loadStudentLogin);
+        });
+    </script>
+</body>
 </html>

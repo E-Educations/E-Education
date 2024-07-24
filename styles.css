@@ -29,6 +29,9 @@ body,
   backdrop-filter: blur(5px);
 }
 
+#home {
+  width: 400px;
+}
 .maincontainer img {
   width: 110px;
   height: auto;
@@ -77,4 +80,9 @@ button {
     max-width: 280px;
     margin-left: -15px;
   }
+}
+
+
+#homeForm button {
+  width: 90%;
 }

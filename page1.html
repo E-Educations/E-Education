@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="page1.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
+
+</head>
+<body>
+
+<div class="navbar" id="myNavbar">
+    <div class="navbarBtn">
+        <a href="#home" onclick="loadHomePage()">Home</a>
+        <a href="#account" onclick="showContainer('accountcontainer')">Account</a>
+        <a href="#courses" onclick="showContainer('coursescontainer')">Courses</a>
+        <a href="#courses2" onclick="showContainer('coursesquizcontainer')">Quiz</a>
+        <a href="#quiz" onclick="showContainer('quizcontainer')" style="display:none;">Quiz</a>
+        <a href="#module" onclick="showContainer('modulecontainer')" style="display:none;">Module</a>
+        <a href="#file" onclick="showContainer('filecontainer')" style="display:none;">File</a>
+        <a href="#filequiz" onclick="showContainer('filequizcontainer')" style="display:none;">File</a>
+        <a href="#calendar" onclick="showContainer('calendarcontainer')">Calendar</a>
+        <a href="#detail" onclick="showContainer('studentdetailcontainer')" style="display:none;">File</a>
+        <a href="#student" onclick="showContainer('studentcontainer')">Student</a>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="openNav()">
+        &#9776;
+    </a>
+</div>
+
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="#home" onclick="loadHomePage()">Home</a>
+    <a href="#account" onclick="showContainer('accountcontainer')">Account</a>
+    <a href="#courses" onclick="showContainer('coursescontainer')">Courses</a>
+    <a href="#quiz" onclick="showContainer('coursesquizcontainer')">Quiz</a>
+    <a href="#module" onclick="showContainer('modulecontainer')" style="display:none;">Module</a>
+    <a href="#file" onclick="showContainer('filecontainer')" style="display:none;">File</a>
+    <a href="#detail" onclick="showContainer('studentdetailcontainer')" style="display:none;">File</a>
+    <a href="#calendar" onclick="showContainer('calendarcontainer')">Calendar</a>
+    <a href="#student" onclick="showContainer('studentcontainer')">Student</a>
+</div>
+
+    <div id="maincontainer">
+        <div class="blockcontainer">
+
+        <div id="accountcontainer" class="allcontainer">
+            <h1>Account</h1>
+            <img id="userImage" src="" alt="User Image" style="display:none;">
+            
+            <div class="button">
+                <button id="editBtn">Edit Profile</button>
+                <button id="saveBtn">Save</button>
+            </div>
+
+            <div class="field">
+                <label for="emailInp">Email:</label>
+                <input id="emailInp" type="text" readonly>
+            </div>
+
+            <div class="field">
+                <label for="usernameInp">Username:</label>
+                <input id="usernameInp" type="text" readonly>
+            </div>
+
+            <div class="field">
+                <label for="phonenumberInp">Phone Number:</label>
+                <input id="phonenumberInp" type="text" readonly>
+            </div>
+
+            <div class="field">
+                <label for="bioInp">Bio:</label>
+                <input id="bioInp" type="text" readonly>
+            </div>
+
+
+            <hr>
+            
+            <label for="imageInp">Upload Image:</label>
+            <div class="image-upload">
+                <input id="imageInp" type="file" accept="image/*">
+                <button id="uploadBtn">Upload</button>
+            </div>
+
+            <div class="signout">
+                <button id="signoutBtn">Sign Out</button>
+            </div>
+        </div>
+
+        <div id="coursescontainer" class="allcontainer">
+            <h1>Courses</h1>
+            <div class="createcourses">
+                <input id="coursesNameInput" type="text" placeholder="Create New Courses">
+                <button id="createcoursesBtn">Create</button>
+            </div>
+
+            <div class="courseslistcontainer">
+                <div id="courseslist" class="courses-grid"></div>
+            </div>
+        </div>
+
+        <div id="coursesquizcontainer" class="allcontainer">
+            <h1>Select Quiz Courses</h1>
+
+            <div class="coursesquizlistcontainer">
+                <div id="coursesquizlist" class="courses-grid"></div>
+            </div>
+        </div>
+        
+        <div id="quizcontainer" class="allcontainer">
+            <a href="#courses2" class="backBtn" onclick="showContainer('coursesquizcontainer')">Back</a>
+            <h1>Quiz</h1>
+            <div class="createquiz">
+                <input id="quizNameInput" type="text" placeholder="Create New Quiz">
+                <button id="createquizBtn">Create</button>
+            </div>
+
+            <div class="quizlistcontainer">
+                <div id="coursesquizlist2" class="module-grid"></div>
+            </div>
+        </div>
+
+        <div id="modulecontainer" class="allcontainer">
+            <a href="#courses" class="backBtn" onclick="showContainer('coursescontainer')">Back</a>
+            <h1>Module</h1>
+            <div class="createmodule">
+                <input id="moduleNameInput" type="text" placeholder="Create New Module">
+                <button id="createmoduleBtn">Create</button>
+            </div>
+
+            <div class="modulelistcontainer">
+                <div id="modulelist" class="module-grid"></div>
+            </div>
+        </div>
+
+        <div id="filecontainer" class="allcontainer">
+            <a href="#module" class="backBtn" onclick="showContainer('modulecontainer')">Back</a>
+            <h1>File</h1>
+            <p>Upload Files</p>
+            <div class="fileupload">
+                <input id="pdfInp" type="file" accept="pdf/*">
+                <button id="uploadpdfBtn">Upload</button>
+            </div>
+            <div id="fileList"></div>
+        </div>
+
+        <div id="calendarcontainer" class="allcontainer">
+            <h1>Calendar</h1>
+            <div class="centercalendar">
+                <div id="calendar"></div>
+            </div>
+        </div>
+
+        <div id="filequizcontainer" class="allcontainer">
+            <a href="#quiz" class="backBtn" onclick="showContainer('quizcontainer')">Back</a>
+            <h1>Quiz</h1>
+            <div class="btncont">
+                <button id="toggleButton">Create New Question</button>
+            </div>
+            <div class="quiz-form-parent hidden">
+                <form id="quiz-form">
+                    <h2>Create New Question</h2>
+                    <div class="question">
+                        <label for="question">Question:</label>
+                        <input type="text" id="question" required><br>
+                    </div>
+                    <div class="choicecontainer">
+                        <label for="choice1">Choice&nbsp;1:</label>
+                        <input type="text" class="choiceinput" id="choice1" required>
+                        <input type="radio" name="correct" value="0" required> Correct<br>
+                    </div>
+                    <div class="choicecontainer">                    
+                        <label for="choice2">Choice&nbsp;2:</label>
+                        <input type="text" class="choiceinput" id="choice2" required>
+                        <input type="radio" name="correct" value="1"> Correct<br>
+                    </div>
+                    <div class="choicecontainer">                    
+                        <label for="choice3">Choice&nbsp;3:</label>
+                        <input type="text" class="choiceinput" id="choice3" required>
+                        <input type="radio" name="correct" value="2"> Correct<br>
+                    </div>
+                    <div class="choicecontainer">                    
+                        <label for="choice4">Choice&nbsp;4:</label>
+                        <input type="text" class="choiceinput" id="choice4" required>
+                        <input type="radio" name="correct" value="3"> Correct<br>
+                    </div>
+                    <button type="submit">Create Quiz</button>
+                </form>
+            </div>
+                   
+            <div class="edit-form-parent hidden2">
+                <form id="edit-form">
+                    <h2>Edit Question</h2>
+                    <div class="question">
+                        <input type="hidden" id="edit-key">
+                        <label for="edit-question">Question:</label>
+                        <input type="text" id="edit-question" required><br>
+                    </div>
+                    <div class="choicecontainer">
+                        <label for="edit-choice1">Choice&nbsp;1:</label>
+                        <input type="text" id="edit-choice1" class="choiceinput" required>
+                        <input type="radio" name="edit-correct" value="0" required> Correct<br>
+                    </div>
+                    <div class="choicecontainer">                    
+                        <label for="edit-choice2">Choice&nbsp;2:</label>
+                        <input type="text" id="edit-choice2" class="choiceinput" required>
+                        <input type="radio" name="edit-correct" value="1"> Correct<br>
+                    </div>
+                    <div class="choicecontainer">                    
+                        <label for="edit-choice3">Choice&nbsp;3:</label>
+                        <input type="text" id="edit-choice3" class="choiceinput" required>
+                        <input type="radio" name="edit-correct" value="2"> Correct<br>
+                    </div>
+                    <div class="choicecontainer">                    
+                    <label for="edit-choice4">Choice&nbsp;4:</label>
+                        <input type="text" id="edit-choice4" class="choiceinput" required>
+                        <input type="radio" name="edit-correct" value="3"> Correct<br>
+                    </div>
+                    <button type="submit">Save</button>
+
+                    <div class="btncont">
+                        <input type="button" id="closeBtn" value="Cancel">
+                    </div>
+                </form>
+            </div>
+
+            <div class="quiz-list-parent">
+                <h2>Question List</h2>
+                <div id="quiz-list"></div>
+            </div>
+        </div>
+
+        
+        <div id="studentcontainer" class="allcontainer">
+            <h1>Student</h1>
+            <div class="centerstudent">
+                <div class="centerBtn">
+                    <button id="registerBtn">Register Student</button>
+                </div>
+                <div id="studentlist"></div>
+            </div>
+        </div>
+
+        <div id="studentdetailcontainer" class="allcontainer">
+            <a href="#student" class="backBtn" onclick="showContainer('studentcontainer')">Back</a>
+            <h1>Student Detail</h1>
+            
+            <div id="studentdetail" class="centerstudent">
+                <div class="sfield">
+                    <label for="semailInp">Email:</label>
+                    <input id="semailInp" type="text" readonly>
+                </div>
+
+                <div class="sfield">
+                    <label for="susernameInp">Username:</label>
+                    <input id="susernameInp" type="text" readonly>
+                </div>
+
+                <div class="sfield">
+                    <label for="sphonenumberInp">Phone Number:</label>
+                    <input id="sphonenumberInp" type="text" readonly>
+                </div>
+
+                <div class="sfield">
+                    <label for="sbioInp">Bio:</label>
+                    <input id="sbioInp" type="text" readonly>
+                </div>
+                <br>
+                <h1 id="quizresulth1">Quiz Result</h1>
+                <div id="quizresult"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    document.getElementById("registerBtn").addEventListener("click", function() {
+        window.location.href = "registerstudent.html";
+    });
+</script>
+
+
+<script>
+    document.getElementById('toggleButton').addEventListener('click', function() {
+        const quizFormParent = document.querySelector('.quiz-form-parent');
+        const editFormParent = document.querySelector('.edit-form-parent');
+        const quizlistparent = document.querySelector('.quiz-list-parent');
+        
+        // Add hidden class when the button is clicked
+        editFormParent.classList.add('hidden2');
+        quizlistparent.classList.remove('hidden2');
+
+        // Toggle hidden class and update button text
+        if (quizFormParent.classList.contains('hidden')) {
+            quizFormParent.classList.remove('hidden');
+            this.textContent = 'Close';
+        } else {
+            quizFormParent.classList.add('hidden');
+            this.textContent = 'Create New Question';
+        }
+    });
+</script>
+
+
+<script>
+    function loadHomePage() {
+        if (confirm("Go to the home page?")) {
+            window.location.href = 'index.html';
+        }
+    }
+</script>
+
+<script>
+    document.getElementById("signoutBtn").addEventListener("click", function() {
+        if (confirm("Are you sure you want to sign out?")) {
+            localStorage.removeItem('user-creds');
+            localStorage.removeItem('selected-module-id');
+            localStorage.removeItem('selected-course-id');
+            localStorage.removeItem('selected-quiz-id');
+            localStorage.removeItem('lastClicked');
+            localStorage.removeItem('selected-course-quiz-id');
+            localStorage.removeItem('selectedStudentId');
+            window.location.href = "loginuser.html";
+        }
+    });
+</script>
+
+<script>
+    function checkUserCredentials() {
+    const userCreds = localStorage.getItem('user-creds');
+    if (!userCreds) {
+        alert('Please login again.');
+        window.location.href = 'loginuser.html';
+    }
+}
+
+// Call the function to check for user credentials
+checkUserCredentials();
+</script>
+
+<script>
+    const editBtn = document.getElementById('editBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const usernameInp = document.getElementById('usernameInp');
+    const phonenumberInp = document.getElementById('phonenumberInp');
+    const bioInp = document.getElementById('bioInp');
+
+    editBtn.addEventListener('click', () => {
+        usernameInp.removeAttribute('readonly');
+        phonenumberInp.removeAttribute('readonly');
+        bioInp.removeAttribute('readonly');
+        saveBtn.disabled = false;
+        usernameInp.focus(); // Focus the input field
+    });
+
+    saveBtn.addEventListener('click', () => {
+        usernameInp.setAttribute('readonly', true);
+        phonenumberInp.setAttribute('readonly', true);
+        bioInp.setAttribute('readonly', true);
+        saveBtn.disabled = true;
+    });
+</script>
+
+<script>
+// Function to save last clicked item to local storage
+function saveLastClicked(containerId) {
+    localStorage.setItem('lastClicked', containerId);
+}
+
+// Function to retrieve and auto-click last clicked item on page load
+function autoClickLast() {
+    var lastClicked = localStorage.getItem('lastClicked');
+    if (lastClicked) {
+        showContainer(lastClicked);
+    }
+}
+
+function openNav() {
+    document.getElementById("mySidebar").style.width = "200px";
+}
+
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+}
+
+window.addEventListener('resize', function() {
+    if (window.innerWidth > 500) {
+        document.getElementById("mySidebar").style.width = "0";
+    }
+});
+
+function showContainer(containerId) {
+    var containers = document.getElementsByClassName("allcontainer");
+    for (var i = 0; i < containers.length; i++) {
+        containers[i].style.display = "none";
+    }
+    document.getElementById(containerId).style.display = "block";
+    saveLastClicked(containerId); // Save last clicked item
+    closeNav();
+
+    // Reload the page if the calendarcontainer is displayed
+    if (containerId === 'calendarcontainer') {
+        // Check if page has been reloaded to avoid infinite loop
+        if (!localStorage.getItem('pageReloaded')) {
+            localStorage.setItem('pageReloaded', 'true');
+            location.reload(); // Reload the page
+        } else {
+            localStorage.removeItem('pageReloaded');
+        }
+    }
+}
+
+// Auto-click last clicked item on page load
+document.addEventListener('DOMContentLoaded', function() {
+    autoClickLast();
+});
+</script>
+
+
+<script type="module">
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+    import { getDatabase, ref, set, remove, onValue, update, push } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBFPqlKDzotCLgx76iduCm0eV1iXBffwpI",
+        authDomain: "e-educations.firebaseapp.com",
+        databaseURL: "https://e-educations-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "e-educations",
+        storageBucket: "e-educations.appspot.com",
+        messagingSenderId: "997162696452",
+        appId: "1:997162696452:web:35f578c90b4e2b44f29a51",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const storage = getStorage(app);
+    const auth = getAuth(app);
+
+    const userCreds = JSON.parse(localStorage.getItem("user-creds"));
+    const uid = userCreds ? userCreds.uid : null;
+
+    
+document.addEventListener('DOMContentLoaded', function () {
+    if (uid) {
+        const userRef = ref(database, 'users/' + uid);
+
+        // Function to update profile data
+        const updateProfile = (newUsername, newPhonenumber, newBio) => {
+            update(userRef, {
+                username: newUsername,
+                phonenumber: newPhonenumber,
+                bio: newBio
+            }).then(() => {
+                console.log("Profile updated successfully!");
+                alert("Profile updated successfully!");
+                location.reload();
+            }).catch((error) => {
+                console.error("Error updating profile:", error);
+            });
+        };
+
+        const userEventsRef = ref(database, 'users/' + uid + '/calendars/events');
+
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            editable: true,
+            selectable: true,
+            events: function (fetchInfo, successCallback, failureCallback) {
+                onValue(userEventsRef, (snapshot) => {
+                    const events = [];
+                    snapshot.forEach(childSnapshot => {
+                        const event = childSnapshot.val();
+                        event.id = childSnapshot.key; // Add the ID to the event
+                        events.push(event);
+                    });
+                    successCallback(events);
+                });
+            },
+            select: function (selectionInfo) {
+                var title = prompt('Enter Event Title:');
+                if (title) {
+                    var event = {
+                        title: title,
+                        start: selectionInfo.startStr,
+                        end: selectionInfo.endStr,
+                        allDay: selectionInfo.allDay,
+                    };
+                    const newEventRef = push(userEventsRef);
+                    set(newEventRef, event).then(() => {
+                        event.id = newEventRef.key; // Set the ID to the new event
+                        calendar.addEvent(event);
+                    });
+                }
+                calendar.unselect();
+            },
+            eventDrop: function (info) {
+                var eventRef = ref(database, 'users/' + uid + '/calendars/events/' + info.event.id);
+                set(eventRef, {
+                    title: info.event.title,
+                    start: info.event.start.toISOString(),
+                    end: info.event.end ? info.event.end.toISOString() : null,
+                    allDay: info.event.allDay,
+                });
+            },
+            eventResize: function (info) {
+                var eventRef = ref(database, 'users/' + uid + '/calendars/events/' + info.event.id);
+                set(eventRef, {
+                    title: info.event.title,
+                    start: info.event.start.toISOString(),
+                    end: info.event.end ? info.event.end.toISOString() : null,
+                    allDay: info.event.allDay,
+                });
+            },
+            eventClick: function (info) {
+                if (confirm(`Do you want to delete the event "${info.event.title}"?`)) {
+                    var eventRef = ref(database, 'users/' + uid + '/calendars/events/' + info.event.id);
+                    remove(eventRef).then(() => {
+                        info.event.remove(); // Remove event from calendar
+                    });
+                }
+            }
+        });
+
+        calendar.render();
+    
+        
+    
+
+
+
+
+
+
+
+
+        function displayStudentList() {
+            const studentListRef = ref(database, `users/${uid}/student/`);
+            
+            onValue(studentListRef, (snapshot) => {
+                const studentListDiv = document.getElementById('studentlist');
+                studentListDiv.innerHTML = ''; // Clear previous list
+                
+                const students = snapshot.val();
+                if (students) {
+                    Object.keys(students).forEach((studentId) => {
+                        const student = students[studentId];
+                        
+                        // Create a container for each student
+                        const studentContainer = document.createElement('div');
+                        studentContainer.id = 'student-container';
+
+
+                        studentContainer.addEventListener('click', () => {
+                            // Save student ID in local storage using JSON.stringify
+                            localStorage.setItem('selectedStudentId', JSON.stringify(studentId));
+                            
+                           // Trigger click event on anchor tag
+                            const detailLink = document.querySelector('a[href="#detail"]');
+                                if (detailLink) {
+                                    detailLink.click();
+                                    location.reload();
+                                }
+                        });
+                    
+                        
+                        // Create a student element
+                        const studentElement = document.createElement('div');
+                        studentElement.textContent = `Name: ${student.username}`;
+                        
+                        // Append the student element to the container
+                        studentContainer.appendChild(studentElement);
+                        
+                        // Append the student container to the main list
+                        studentListDiv.appendChild(studentContainer);
+                    });
+                } else {
+                    studentListDiv.textContent = 'No students found.';
+                }
+            }, {
+                onlyOnce: true 
+            });
+        }
+
+        displayStudentList();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Function to handle course creation
+        const createCourse = (courseName) => {
+            const userCoursesRef = ref(database, `users/${uid}/courses`);
+            push(userCoursesRef, { coursename: courseName })
+                .then(() => {
+                    console.log(`Course "${courseName}" created successfully!`);
+                    coursesNameInput.value = ''; // Assuming coursesNameInput is defined globally
+                    displayCourses(); // Refresh the courses list after adding a new course
+                }).catch(error => {
+                    console.error('Error creating course:', error);
+                });
+        };
+
+
+
+
+
+
+
+
+
+
+        // Display courses list
+        const coursesListDiv = document.getElementById('courseslist');
+
+        function displayCourses() {
+            const userCoursesRef = ref(database, `users/${uid}/courses`);
+
+            onValue(userCoursesRef, (snapshot) => {
+                const coursesData = snapshot.val();
+
+                if (coursesData) {
+                    const coursesArray = Object.entries(coursesData);
+
+                    const coursesHTML = coursesArray.map(([key, course]) => `
+                        <div class="course-container" data-course-id="${key}">
+                            <div class="course-name">${course.coursename}</div>
+                            <button class="delete-course" data-course-id="${key}">Delete</button>
+                        </div>
+                    `).join('');
+
+                    coursesListDiv.innerHTML = coursesHTML;
+
+                    // Add click event listener to each course container
+                    const courseContainers = document.querySelectorAll('.course-container');
+                    courseContainers.forEach(container => {
+                        container.addEventListener('click', () => {
+                            const courseId = container.getAttribute('data-course-id');
+                            if (courseId) {
+                                // Save course ID in local storage
+                                localStorage.setItem('selected-course-id', JSON.stringify(courseId));
+                                console.log(`Course ID ${courseId} saved in local storage.`);
+
+                                // Trigger click event on anchor tag
+                                const moduleLink = document.querySelector('a[href="#module"]');
+                                if (moduleLink) {
+                                    moduleLink.click();
+                                    location.reload();
+                                }
+                            }
+                        });
+                    });
+
+                    // Add click event listener to each delete button
+                    const deleteCourseButtons = document.querySelectorAll('.delete-course');
+                    deleteCourseButtons.forEach(button => {
+                        button.addEventListener('click', (event) => {
+                            event.stopPropagation(); // Prevent triggering the course click event
+                            const courseId = button.getAttribute('data-course-id');
+                            deleteCourse(courseId);
+                        });
+                    });
+                } else {
+                    coursesListDiv.innerHTML = '<p>No courses found.</p>';
+                }
+            }, {
+                onlyOnce: true // This ensures it fetches the data only once initially
+            });
+        }
+
+        // Function to delete a course
+        const deleteCourse = (courseId) => {
+            const courseRef = ref(database, `users/${uid}/courses/${courseId}`);
+            remove(courseRef)
+                .then(() => {
+                    console.log(`Course "${courseId}" deleted successfully!`);
+                    displayCourses(); // Refresh the courses list after deleting a course
+                }).catch(error => {
+                    console.error('Error deleting course:', error);
+                });
+        }
+
+        // Call the function to display courses initially
+        displayCourses();
+
+
+
+
+
+
+
+
+        // Display courses quiz list
+        const coursesQuizListDiv = document.getElementById('coursesquizlist');
+
+        function displayCoursesQuiz() {
+            const userCoursesRef = ref(database, `users/${uid}/courses`);
+
+            onValue(userCoursesRef, (snapshot) => {
+                const coursesQuizData = snapshot.val();
+
+                if (coursesQuizData) {
+                    const coursesQuizArray = Object.entries(coursesQuizData);
+
+                    const coursesQuizHTML = coursesQuizArray.map(([key, course]) => `
+                        <div class="course-container" data-course-quiz-id="${key}">
+                            <div class="course-name">${course.coursename}</div>
+                        </div>
+                    `).join('');
+
+                    coursesQuizListDiv.innerHTML = coursesQuizHTML;
+
+                    // Add click event listener to each course container
+                    const courseQuizContainers = document.querySelectorAll('#coursesquizlist .course-container');
+                    courseQuizContainers.forEach(container => {
+                        container.addEventListener('click', () => {
+                            const coursequizId = container.getAttribute('data-course-quiz-id');
+                            if (coursequizId) {
+                                // Save course ID in local storage
+                                localStorage.setItem('selected-course-quiz-id', JSON.stringify(coursequizId));
+                                console.log(`Course ID ${coursequizId} saved in local storage.`);
+
+                                // Trigger click event on anchor tag
+                                const quizLink = document.querySelector('a[href="#quiz"]');
+                                if (quizLink) {
+                                    quizLink.click();
+                                    location.reload();
+                                }
+                            }
+                        });
+                    });
+                } else {
+                    coursesQuizListDiv.innerHTML = '<p>No courses quiz available.</p>';
+                }
+            });
+        }
+
+        // Call the function to display course quizzes initially
+        displayCoursesQuiz();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Function to handle module creation
+        const cid = JSON.parse(localStorage.getItem('selected-course-id'));
+        const createModule = (moduleName) => {
+            if (!cid) {
+                console.error('Course ID not found in local storage.');
+                return;
+            }
+
+            const userModuleRef = ref(database, `users/${uid}/courses/${cid}/module`);
+            push(userModuleRef, { modulename: moduleName })
+                .then(() => {
+                    console.log(`Module "${moduleName}" created successfully!`);
+                    moduleNameInput.value = ''; // Assuming moduleNameInput is defined globally
+                    displayModule(); // Refresh the module list after adding a new module
+                }).catch(error => {
+                    console.error('Error creating module:', error);
+                });
+        };
+
+        // Display module list
+        const moduleListDiv = document.getElementById('modulelist');
+
+        function displayModule() {
+            const userModuleRef = ref(database, `users/${uid}/courses/${cid}/module`);
+
+            onValue(userModuleRef, (snapshot) => {
+                const moduleData = snapshot.val();
+
+                if (moduleData) {
+                    const moduleArray = Object.entries(moduleData);
+
+                    const moduleHTML = moduleArray.map(([key, module]) => `
+                        <div class="module-container" data-module-id="${key}">
+                            <div class="module-name">${module.modulename}</div>
+                            <button class="delete-module" data-module-id="${key}">Delete</button>
+                        </div>
+                    `).join('');
+
+                    moduleListDiv.innerHTML = moduleHTML;
+
+                    // Add click event listener to each module container
+                    const moduleContainers = document.querySelectorAll('.module-container');
+                    moduleContainers.forEach(container => {
+                        container.addEventListener('click', () => {
+                            const moduleId = container.getAttribute('data-module-id');
+                            if (moduleId) {
+                                // Save module ID in local storage
+                                localStorage.setItem('selected-module-id', JSON.stringify(moduleId));
+                                console.log(`Module ID ${moduleId} saved in local storage.`);
+
+                                // Trigger click event on anchor tag
+                                const moduleLink = document.querySelector('a[href="#file"]');
+                                if (moduleLink) {
+                                    moduleLink.click();
+                                    location.reload();
+                                }
+                            }
+                        });
+                    });
+
+                    // Add click event listener to each delete button
+                    const deleteModuleButtons = document.querySelectorAll('.delete-module');
+                    deleteModuleButtons.forEach(button => {
+                        button.addEventListener('click', (event) => {
+                            event.stopPropagation(); // Prevent triggering the module click event
+                            const moduleId = button.getAttribute('data-module-id');
+                            deleteModule(moduleId);
+                        });
+                    });
+                } else {
+                    moduleListDiv.innerHTML = '<p>No modules found.</p>';
+                }
+            }, {
+                onlyOnce: true // This ensures it fetches the data only once initially
+            });
+        }
+
+        // Function to delete a module
+        const deleteModule = (moduleId) => {
+            const moduleRef = ref(database, `users/${uid}/courses/${cid}/module/${moduleId}`);
+            remove(moduleRef)
+                .then(() => {
+                    console.log(`Module "${moduleId}" deleted successfully!`);
+                    displayModule(); // Refresh the module list after deleting a module
+                }).catch(error => {
+                    console.error('Error deleting module:', error);
+                });
+        }
+
+        // Call the function to display module initially
+        displayModule();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // Function to handle quiz creation
+        const cqid = JSON.parse(localStorage.getItem('selected-course-quiz-id'));
+        const createQuiz = (quizName) => {
+            if (!cqid) {
+                console.error('Course ID not found in local storage.');
+                return;
+            }
+
+            const userQuizRef = ref(database, `users/${uid}/courses/${cqid}/quiz`);
+            push(userQuizRef, { quizname: quizName })
+                .then(() => {
+                    console.log(`Quiz "${quizName}" created successfully!`);
+                    quizNameInput.value = ''; // Assuming quizNameInput is defined globally
+                    displayQuiz(); // Refresh the quiz list after adding a new quiz
+                }).catch(error => {
+                    console.error('Error creating quiz:', error);
+                });
+        };
+
+        // Display quiz list
+        const quizListDiv = document.getElementById('coursesquizlist2');
+
+        function displayQuiz() {
+            const userQuizRef = ref(database, `users/${uid}/courses/${cqid}/quiz`);
+
+            onValue(userQuizRef, (snapshot) => {
+                const quizData = snapshot.val();
+
+                if (quizData) {
+                    const quizArray = Object.entries(quizData);
+
+                    const quizHTML = quizArray.map(([key, quiz]) => `
+                        <div class="quiz-container" data-quiz-id="${key}">
+                            <div class="quiz-name">${quiz.quizname}</div>
+                            <button class="delete-quiz" data-quiz-id="${key}">Delete</button>
+                        </div>
+                    `).join('');
+
+                    quizListDiv.innerHTML = quizHTML;
+
+                    // Add click event listener to each quiz container
+                    const quizContainers = document.querySelectorAll('.quiz-container');
+                    quizContainers.forEach(container => {
+                        container.addEventListener('click', () => {
+                            const quizId = container.getAttribute('data-quiz-id');
+                            if (quizId) {
+                                // Save quiz ID in local storage
+                                localStorage.setItem('selected-quiz-id', JSON.stringify(quizId));
+                                console.log(`Quiz ID ${quizId} saved in local storage.`);
+
+                                // Trigger click event on anchor tag
+                                const quizLink = document.querySelector('a[href="#filequiz"]');
+                                if (quizLink) {
+                                    quizLink.click();
+                                    location.reload();
+                                }
+                            }
+                        });
+                    });
+
+                    // Add click event listener to each delete button
+                    const deleteQuizButtons = document.querySelectorAll('.delete-quiz');
+                    deleteQuizButtons.forEach(button => {
+                        button.addEventListener('click', (event) => {
+                            event.stopPropagation(); // Prevent triggering the quiz click event
+                            const quizId = button.getAttribute('data-quiz-id');
+                            deleteQuiz(quizId);
+                        });
+                    });
+                } else {
+                    quizListDiv.innerHTML = '<p>No quizzes found.</p>';
+                }
+            }, {
+                onlyOnce: true // This ensures it fetches the data only once initially
+            });
+        }
+
+        // Function to delete a quiz
+        const deleteQuiz = (quizId) => {
+            const quizRef = ref(database, `users/${uid}/courses/${cqid}/quiz/${quizId}`);
+            remove(quizRef)
+                .then(() => {
+                    console.log(`Quiz "${quizId}" deleted successfully!`);
+                    displayQuiz(); // Refresh the quiz list after deleting a quiz
+                }).catch(error => {
+                    console.error('Error deleting quiz:', error);
+                });
+        }
+
+        // Call the function to display quiz initially
+        displayQuiz();
+
+        // Event listener for creating a new quiz
+        const createQuizBtn = document.getElementById('createquizBtn');
+        const quizNameInput = document.getElementById('quizNameInput');
+
+        createQuizBtn.addEventListener('click', () => {
+            const quizName = quizNameInput.value.trim();
+            if (quizName) {
+                createQuiz(quizName);
+            } else {
+                console.error('Quiz name cannot be empty.');
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+        const pdfInput = document.getElementById('pdfInp');
+        const uploadButton = document.getElementById('uploadpdfBtn');
+
+        uploadButton.addEventListener('click', async () => {
+            const file = pdfInput.files[0];
+            const cid = JSON.parse(localStorage.getItem('selected-course-id'));
+            const mid = JSON.parse(localStorage.getItem('selected-module-id'));
+
+            if (file && cid && mid) {
+                const pdfRef = storageRef(storage, `pdfs/${uid}/${cid}/module/${mid}/${createNewModuleId()}/${file.name}`);
+                
+                try {
+                    const snapshot = await uploadBytes(pdfRef, file);
+                    const downloadUrl = await getDownloadURL(pdfRef);
+
+                    const newModuleRef = push(ref(database, `users/${uid}/courses/${cid}/module/${mid}/files`));
+                    const newModuleId = newModuleRef.key;
+
+                    const updates = {};
+                    updates[`users/${uid}/courses/${cid}/module/${mid}/files/${newModuleId}/url`] = downloadUrl;
+                    updates[`users/${uid}/courses/${cid}/module/${mid}/files/${newModuleId}/filename`] = file.name;
+
+                    await update(ref(database), updates);
+
+                    console.log('PDF uploaded successfully:', downloadUrl);
+                    alert('File uploaded'); // Alert message
+                    location.reload();
+                } catch (error) {
+                    console.error('Error uploading PDF:', error);
+                }
+            } else {
+                console.error('File or cid is missing.');
+            }
+        });
+
+        function createNewModuleId() {
+            // Generate a new module ID as per your requirement
+            return 'module_' + Date.now();
+        }
+
+        // Display file list
+        const fileListDiv = document.getElementById('fileList');
+
+        // Function to fetch and display files
+        function displayFiles() {
+            const cid = JSON.parse(localStorage.getItem('selected-course-id'));
+            const mid = JSON.parse(localStorage.getItem('selected-module-id'));
+            if (!cid || !mid) {
+                console.error('cid or mid not found.');
+                return;
+            }
+
+            const filesRef = ref(database, `users/${uid}/courses/${cid}/module/${mid}/files`);
+
+            // Listen for changes in files data
+            onValue(filesRef, (snapshot) => {
+                fileListDiv.innerHTML = ''; // Clear previous content
+
+                snapshot.forEach((childSnapshot) => {
+                    const fileData = childSnapshot.val();
+                    const fileKey = childSnapshot.key;
+
+                    // Create HTML elements for displaying file
+                    const fileDiv = document.createElement('div');
+                    fileDiv.classList.add('file-item');
+
+                    const fileTitle = document.createElement('h3');
+                    fileTitle.textContent = fileData.filename || 'Untitled';
+
+                    const fileLink = document.createElement('a');
+                    fileLink.href = fileData.url;
+                    fileLink.textContent = 'Open ';
+                    fileLink.id = 'openBtn';
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.classList.add('delete-file');
+                    deleteButton.dataset.fileId = fileKey;
+
+                    deleteButton.addEventListener('click', () => {
+                        deleteFile(fileKey);
+                    });
+
+                    fileDiv.appendChild(fileTitle);
+                    fileDiv.appendChild(fileLink);
+                    fileDiv.appendChild(deleteButton);
+
+                    fileListDiv.appendChild(fileDiv);
+                });
+            });
+        }
+
+        // Function to delete a file
+        const deleteFile = (fileId) => {
+            const cid = JSON.parse(localStorage.getItem('selected-course-id'));
+            const mid = JSON.parse(localStorage.getItem('selected-module-id'));
+            const fileRef = ref(database, `users/${uid}/courses/${cid}/module/${mid}/files/${fileId}`);
+
+            remove(fileRef)
+                .then(() => {
+                    console.log(`File "${fileId}" deleted successfully!`);
+                    displayFiles(); // Refresh the file list after deleting a file
+                })
+                .catch(error => {
+                    console.error('Error deleting file:', error);
+                });
+        }
+
+        // Initial display of files
+        displayFiles();
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+        // Event listeners
+        document.getElementById('saveBtn').addEventListener('click', () => {
+            const newUsername = document.getElementById('usernameInp').value;
+            const newPhonenumber = document.getElementById('phonenumberInp').value;
+            const newBio = document.getElementById('bioInp').value;
+            updateProfile(newUsername, newPhonenumber, newBio);
+        });
+
+        document.getElementById('createcoursesBtn').addEventListener('click', () => {
+            const courseName = document.getElementById('coursesNameInput').value.trim();
+            if (courseName) {
+                createCourse(courseName);
+                location.reload();
+            } else {
+                console.error('Please enter a valid course name.');
+            }
+        });
+        document.getElementById('createmoduleBtn').addEventListener('click', () => {
+            const moduleName = document.getElementById('moduleNameInput').value.trim();
+            if (moduleName) {
+                createModule(moduleName);
+                location.reload();
+            } else {
+                console.error('Please enter a valid module name.');
+            }
+        });
+
+        document.getElementById('uploadBtn').addEventListener('click', () => {
+            const fileInput = document.getElementById('imageInp').files[0];
+            if (fileInput) {
+                const storageReference = storageRef(storage, 'images/' + uid);
+                uploadBytes(storageReference, fileInput)
+                    .then((snapshot) => {
+                        console.log('Uploaded a blob or file!');
+                        getDownloadURL(storageReference)
+                            .then((url) => {
+                                document.getElementById('userImage').src = url;
+                                document.getElementById('userImage').style.display = 'block';
+                                update(userRef, { imageURL: url })
+                                    .then(() => {
+                                        console.log("Profile photo uploaded successfully!");
+                                        alert("Profile photo uploaded successfully!");
+                                        location.reload();
+                                    }).catch(error => {
+                                        console.error("Error uploading profile photo:", error);
+                                        alert("Failed to upload profile photo. Please try again.");
+                                    });
+                            }).catch((error) => {
+                                console.error("Error getting download URL:", error);
+                            });
+                    }).catch((error) => {
+                        console.error("Error uploading file:", error);
+                    });
+            } else {
+                console.log("No file selected");
+            }
+        });
+
+        // Listen for real-time updates to the user's data
+        onValue(userRef, (snapshot) => {
+            const userData = snapshot.val();
+            if (userData) {
+                document.getElementById('emailInp').value = userData.email || "-";
+                document.getElementById('usernameInp').value = userData.username || "-";
+                document.getElementById('phonenumberInp').value = userData.phonenumber || "-";
+                document.getElementById('bioInp').value = userData.bio || "-";
+                const imageURL = userData.imageURL;
+                if (imageURL) {
+                    document.getElementById('userImage').src = imageURL;
+                    document.getElementById('userImage').style.display = 'block';
+                } else {
+                    document.getElementById('userImage').src = '';
+                    document.getElementById('userImage').style.display = 'none';
+                }
+            } else {
+                console.log("No data available for the specified UID");
+                document.getElementById('emailInp').value = "-";
+                document.getElementById('usernameInp').value = "-";
+                document.getElementById('phonenumberInp').value = "-";
+                document.getElementById('bioInp').value = "-";
+                document.getElementById('userImage').src = '';
+                document.getElementById('userImage').style.display = 'none';
+            }
+        }, (error) => {
+            console.error("Error fetching user data:", error);
+        });
+
+    } else {
+        console.error('User not authenticated or UID not found.');
+    }
+
+
+
+
+
+
+
+
+
+
+    //quiz
+    const cqid = JSON.parse(localStorage.getItem('selected-course-quiz-id'));
+    const qid = JSON.parse(localStorage.getItem('selected-quiz-id'));
+
+    if (!cqid || !qid) {
+        console.error('Course ID or Quiz ID not found in local storage.');
+        return;
+    }
+
+    const quizForm = document.getElementById('quiz-form');
+    const editForm = document.getElementById('edit-form');
+    const quizList = document.getElementById('quiz-list');
+    let quizzesData = {};
+
+
+    const quizzesRef = ref(database, `users/${uid}/courses/${cqid}/quiz/${qid}/quizzes/`);
+    onValue(quizzesRef, (snapshot) => {
+        quizList.innerHTML = '';
+        snapshot.forEach((childSnapshot) => {
+            const quiz = childSnapshot.val();
+            const quizKey = childSnapshot.key;
+            quizzesData[quizKey] = quiz;
+            if (quiz && quiz.choices && quiz.choices.length === 4) {
+                const quizElement = document.createElement('div');
+                quizElement.classList.add('quiz-element');
+                quizElement.innerHTML = `
+                    <p style="word-wrap: break-word; color: rgb(166, 166, 255);"> ${quiz.question}</p>
+                    <ul style="word-wrap: break-word;">
+                        ${quiz.choices.map((choice, index) => `<li>${choice}</li>`).join('')}
+                    </ul>
+                    <div class="button-container">
+                        <button onclick="editQuiz('${quizKey}')">Edit</button>
+                        <button onclick="deleteQuiz('${quizKey}')">Delete</button>
+                    </div>
+                `;
+                quizList.appendChild(quizElement);
+            }
+        });
+    });
+
+    quizForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const question = document.getElementById('question').value;
+        const choices = [
+            document.getElementById('choice1').value,
+            document.getElementById('choice2').value,
+            document.getElementById('choice3').value,
+            document.getElementById('choice4').value
+        ];
+        const correctAnswer = document.querySelector('input[name="correct"]:checked').value;
+
+        const newQuizRef = push(quizzesRef);
+        set(newQuizRef, {
+            question: question,
+            choices: choices,
+            correctAnswer: correctAnswer
+        }).then(() => {
+            console.log('Quiz created successfully with key:', newQuizRef.key);
+            alert('Quiz created successfully!');
+            quizForm.reset();
+        }).catch(error => {
+            console.error('Error creating quiz:', error);
+        });
+    });
+
+    editForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const quizKey = document.getElementById('edit-key').value;
+        const updatedQuestion = document.getElementById('edit-question').value;
+        const updatedChoices = [
+            document.getElementById('edit-choice1').value,
+            document.getElementById('edit-choice2').value,
+            document.getElementById('edit-choice3').value,
+            document.getElementById('edit-choice4').value
+        ];
+        const updatedCorrectAnswer = document.querySelector('input[name="edit-correct"]:checked').value;
+
+        const quizRef = ref(database, `users/${uid}/courses/${cqid}/quiz/${qid}/quizzes/${quizKey}`);
+        update(quizRef, {
+            question: updatedQuestion,
+            choices: updatedChoices,
+            correctAnswer: updatedCorrectAnswer
+        }).then(() => {
+            alert('Quiz updated successfully!');
+            editForm.reset();
+            document.querySelector('.edit-form-parent').classList.add('hidden2'); 
+            document.querySelector('.quiz-list-parent').classList.remove('hidden2');
+        }).catch(error => {
+            console.error('Error updating quiz:', error);
+        });
+    });
+
+    window.editQuiz = function (quizKey) {
+        const quiz = quizzesData[quizKey];
+        if (quiz) {
+            document.getElementById('edit-key').value = quizKey;
+            document.getElementById('edit-question').value = quiz.question;
+            document.getElementById('edit-choice1').value = quiz.choices[0];
+            document.getElementById('edit-choice2').value = quiz.choices[1];
+            document.getElementById('edit-choice3').value = quiz.choices[2];
+            document.getElementById('edit-choice4').value = quiz.choices[3];
+            document.querySelector(`input[name="edit-correct"][value="${quiz.correctAnswer}"]`).checked = true;
+            document.querySelector('.edit-form-parent').classList.remove('hidden2');
+            document.querySelector('.quiz-list-parent').classList.add('hidden2'); // Hide quiz list on edit
+            document.querySelector('.quiz-form-parent').classList.add('hidden');
+            document.getElementById('toggleButton').textContent = "Create New Question";
+        }
+    };
+
+    document.getElementById('closeBtn').addEventListener('click', function() {
+        document.querySelector('.edit-form-parent').classList.add('hidden2');
+        document.querySelector('.quiz-list-parent').classList.remove('hidden2');
+    });
+
+    window.deleteQuiz = function (quizKey) {
+        const quizRef = ref(database, `users/${uid}/courses/${cqid}/quiz/${qid}/quizzes/${quizKey}`);
+        remove(quizRef).then(() => {
+            alert('Quiz deleted successfully!');
+        }).catch(error => {
+            console.error('Error deleting quiz:', error);
+        });
+    };
+
+
+   
+            
+
+    // Display student details
+    const userCreds = JSON.parse(localStorage.getItem("user-creds"));
+    const uid2 = userCreds ? userCreds.uid : null;
+
+    // Retrieve selected student ID from local storage
+    const suid = JSON.parse(localStorage.getItem('selectedStudentId'));
+
+    if (!suid || !uid2) {
+        console.error('User ID or selected student ID not found in local storage.');
+        return;
+    }
+
+    // Function to display student details
+    function displayStudentDetails() {
+        const studentDataRef = ref(database, `users/${uid2}/student/${suid}`);
+
+        onValue(studentDataRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                document.getElementById('semailInp').value = data.email || '';
+                document.getElementById('susernameInp').value = data.username || '';
+                document.getElementById('sphonenumberInp').value = data.phonenumber || '';
+                document.getElementById('sbioInp').value = data.bio || '';
+            }
+        });
+    }
+
+    // Call the function to display student details
+    displayStudentDetails();
+
+
+
+
+
+
+// Function to display quiz results
+function displayQuizResults() {
+    const quizResultsRef = ref(database, `users/${uid2}/student/${suid}/answer`);
+
+    onValue(quizResultsRef, (snapshot) => {
+        const data = snapshot.val();
+        const quizResultContainer = document.getElementById('quizresult');
+        quizResultContainer.innerHTML = ''; // Clear previous content
+
+        if (data) {
+            Object.keys(data).forEach(answerId => {
+                const result = data[answerId];
+                const quizResultHTML = `
+                    <div class="quiz-result-container">
+                        <div class="sfield">
+                            <label for="quizcoursename-${answerId}">Course:</label>
+                            <input id="quizcoursename-${answerId}" type="text" value="${result.quizcoursename || ''}" readonly>
+                        </div>
+                        <div class="sfield">
+                            <label for="quizname-${answerId}">Quiz:</label>
+                            <input id="quizname-${answerId}" type="text" value="${result.quizname || ''}" readonly>
+                        </div>
+                        <div class="sfield">
+                            <label for="percentage-${answerId}">Percentage:</label>
+                            <input id="percentage-${answerId}" type="text" value="${result.percentage ? result.percentage + '%' : ''}" readonly>
+                        </div>
+                    </div>
+                `;
+                quizResultContainer.innerHTML += quizResultHTML;
+            });
+        }
+    });
+}
+
+// Call the function to display quiz results
+displayQuizResults();
+
+
+
+
+});
+</script>
+
+</body>
+</html>

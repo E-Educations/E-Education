@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="page1.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script>
+</head>
+<body>
+    
+<div class="navbar" id="myNavbar">
+    <div class="navbarBtn">
+        <a href="#home" onclick="loadHomePage()">Home</a>
+        <a href="#account" onclick="showContainer('accountcontainer')">Account</a>
+        <a href="#courses" onclick="showContainer('coursescontainer')">Courses</a>
+        <a href="#courses2" onclick="showContainer('coursesquizcontainer')">Quiz</a>
+        <a href="#quiz" onclick="showContainer('quizcontainer')" style="display:none;">Quiz</a>
+        <a href="#module" onclick="showContainer('modulecontainer')" style="display:none;">Module</a>
+        <a href="#file" onclick="showContainer('filecontainer')" style="display:none;">File</a>
+        <a href="#filequiz" onclick="showContainer('filequizcontainer')" style="display:none;">File</a>
+        <a href="#calendar" onclick="showContainer('calendarcontainer')">Calendar</a>
+    </div>
+    <a href="javascript:void(0);" class="icon" onclick="openNav()">
+        &#9776;
+    </a>
+</div>
+
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="#home" onclick="loadHomePage()">Home</a>
+    <a href="#account" onclick="showContainer('accountcontainer')">Account</a>
+    <a href="#courses" onclick="showContainer('coursescontainer')">Courses</a>
+    <a href="#quiz" onclick="showContainer('coursesquizcontainer')">Quiz</a>
+    <a href="#module" onclick="showContainer('modulecontainer')" style="display:none;">Module</a>
+    <a href="#file" onclick="showContainer('filecontainer')" style="display:none;">File</a>
+    <a href="#calendar" onclick="showContainer('calendarcontainer')">Calendar</a>
+</div>
+
+<div id="maincontainer">
+    <div class="blockcontainer">
+        <div id="accountcontainer" class="allcontainer">
+            <h1>Account</h1>
+            <img id="userImage" src="" alt="User Image" style="display:none;">
+            
+            <div class="button">
+                <button id="editBtn">Edit Profile</button>
+                <button id="saveBtn">Save</button>
+            </div>
+
+            <div class="field">
+                <label for="emailInp">Email:</label>
+                <input id="emailInp" type="text" readonly>
+            </div>
+
+            <div class="field">
+                <label for="usernameInp">Username:</label>
+                <input id="usernameInp" type="text" readonly>
+            </div>
+
+            <div class="field">
+                <label for="phonenumberInp">Phone Number:</label>
+                <input id="phonenumberInp" type="text" readonly>
+            </div>
+
+            <div class="field">
+                <label for="bioInp">Bio:</label>
+                <input id="bioInp" type="text" readonly>
+            </div>
+
+
+            <hr>
+            
+            <label for="imageInp">Upload Image:</label>
+            <div class="image-upload">
+                <input id="imageInp" type="file" accept="image/*">
+                <button id="uploadBtn">Upload</button>
+            </div>
+
+            <div class="signout">
+                <button id="signoutBtn">Sign Out</button>
+            </div>
+        </div>
+
+        
+        <div id="coursescontainer" class="allcontainer">
+            <h1>Courses</h1>
+            <div class="courseslistcontainer">
+                <div id="courseslist" class="courses-grid"></div>
+            </div>
+        </div>
+
+        <div id="modulecontainer" class="allcontainer">
+            <a href="#courses" class="backBtn" onclick="showContainer('coursescontainer')">Back</a>
+            <h1>Module</h1>
+            <div class="modulelistcontainer">
+                <div id="modulelist" class="module-grid"></div>
+            </div>
+        </div>
+
+        <div id="filecontainer" class="allcontainer">
+            <a href="#module" class="backBtn" onclick="showContainer('modulecontainer')">Back</a>
+            <h1>File</h1>
+            <div id="fileList"></div>
+        </div>
+
+        <div id="calendarcontainer" class="allcontainer">
+            <h1>Calendar</h1>
+            <div class="centercalendar">
+                <div id="calendar"></div>
+            </div>
+        </div>
+
+
+        <!--Quiz-->
+        <div id="coursesquizcontainer" class="allcontainer">
+            <h1>Select Quiz Courses</h1>
+
+            <div class="coursesquizlistcontainer">
+                <div id="coursesquizlist" class="courses-grid"></div>
+            </div>
+        </div>
+
+        <div id="quizcontainer" class="allcontainer">
+            <a href="#courses2" class="backBtn" onclick="showContainer('coursesquizcontainer')">Back</a>
+            <h1 id="quizcoursename">Quiz</h1>
+            <div class="quizlistcontainer">
+                <div id="coursesquizlist2" class="module-grid"></div>
+            </div>
+        </div>
+
+        <div id="filequizcontainer" class="allcontainer">
+            <a href="#quiz" class="backBtn" onclick="showContainer('quizcontainer')">Back</a>
+            <h1 id="quiz-name">Quiz</h1>
+            <form id="answer-form">
+                <div id="quiz-container"></div>
+                <button type="submit">Submit Answers</button>
+            </form>
+            
+            <div id="answers-container"></div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+
+<script>
+    document.getElementById("signoutBtn").addEventListener("click", function() {
+        if (confirm("Are you sure you want to sign out?")) {
+            localStorage.removeItem('student-creds');
+            localStorage.removeItem('student-selected-course-quiz-id-name');
+            localStorage.removeItem('student-selected-quiz-id');
+            localStorage.removeItem('student-selected-module-id');
+            localStorage.removeItem('student-selected-course-id');
+            localStorage.removeItem('studentlastClicked');
+            localStorage.removeItem('student-selected-quiz');
+            localStorage.removeItem('student-selected-course-quiz-id');
+            window.location.href = "loginstudent.html";
+        }
+    });
+</script>
+
+<script>
+    function checkUserCredentials() {
+    const userCreds = localStorage.getItem('student-creds');
+    if (!userCreds) {
+        alert('Please login again.');
+        window.location.href = 'loginstudent.html';
+    }
+}
+
+// Call the function to check for user credentials
+checkUserCredentials();
+</script>
+
+<script>
+  // Retrieve the quiz course name from local storage
+  const quizcoursename = JSON.parse(localStorage.getItem('student-selected-course-quiz-id-name'));
+
+  // Check if the quiz course name exists and update the inner text of the h1 element
+  if (quizcoursename) {
+    document.getElementById('quizcoursename').innerText = `${quizcoursename} quiz's`;
+  } else {
+    console.log('Quiz course name not found in local storage.');
+  }
+</script>
+
+<script>
+    function displayQuizName() {
+        const storedData = JSON.parse(localStorage.getItem('student-selected-quiz-id'));
+        const quizName = storedData ? storedData.quizName : "No quiz selected";
+        const quizNameElement = document.getElementById('quiz-name');
+        quizNameElement.textContent = `${quizName} quiz's`;
+    }
+
+    // Call the function to display the quiz name
+    displayQuizName();
+</script>
+
+<script>
+    const editBtn = document.getElementById('editBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const usernameInp = document.getElementById('usernameInp');
+    const phonenumberInp = document.getElementById('phonenumberInp');
+    const bioInp = document.getElementById('bioInp');
+
+    editBtn.addEventListener('click', () => {
+        usernameInp.removeAttribute('readonly');
+        phonenumberInp.removeAttribute('readonly');
+        bioInp.removeAttribute('readonly');
+        saveBtn.disabled = false;
+        usernameInp.focus(); // Focus the input field
+    });
+
+    saveBtn.addEventListener('click', () => {
+        usernameInp.setAttribute('readonly', true);
+        phonenumberInp.setAttribute('readonly', true);
+        bioInp.setAttribute('readonly', true);
+        saveBtn.disabled = true;
+    });
+</script>
+
+<!-- sidebar n navbar function-->
+<script>
+    // Function to save last clicked item to local storage
+    function saveLastClicked(containerId) {
+        localStorage.setItem('studentlastClicked', containerId);
+    }
+
+    // Function to retrieve and auto-click last clicked item on page load
+    function autoClickLast() {
+        var lastClicked = localStorage.getItem('studentlastClicked');
+        if (lastClicked) {
+            showContainer(lastClicked);
+        }
+    }
+
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "200px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+    }
+
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 500) {
+            document.getElementById("mySidebar").style.width = "0";
+        }
+    });
+
+    function showContainer(containerId) {
+        var containers = document.getElementsByClassName("allcontainer");
+        for (var i = 0; i < containers.length; i++) {
+            containers[i].style.display = "none";
+        }
+        document.getElementById(containerId).style.display = "block";
+        saveLastClicked(containerId); // Save last clicked item
+        closeNav();
+
+        // Reload the page if the calendarcontainer is displayed
+        if (containerId === 'calendarcontainer') {
+            // Check if page has been reloaded to avoid infinite loop
+            if (!localStorage.getItem('pageReloaded')) {
+                localStorage.setItem('pageReloaded', 'true');
+                location.reload(); // Reload the page
+            } else {
+                localStorage.removeItem('pageReloaded');
+            }
+        }
+    }
+
+    // Auto-click last clicked item on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        autoClickLast();
+    });
+</script>
+
+
+<script type="module">
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+    import { getDatabase, ref, set, remove, onValue, update, push } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBFPqlKDzotCLgx76iduCm0eV1iXBffwpI",
+        authDomain: "e-educations.firebaseapp.com",
+        databaseURL: "https://e-educations-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "e-educations",
+        storageBucket: "e-educations.appspot.com",
+        messagingSenderId: "997162696452",
+        appId: "1:997162696452:web:35f578c90b4e2b44f29a51",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+    const storage = getStorage(app);
+    const auth = getAuth(app);
+
+    const studentCreds = JSON.parse(localStorage.getItem("student-creds"));
+    const studentuid = studentCreds ? studentCreds.uid : null;
+    const adminuid = studentCreds ? studentCreds.adminUid : null;
+
+    document.addEventListener('DOMContentLoaded', function () {
+        if (studentuid && adminuid) {
+
+
+            //Account 
+            const userRef = ref(database, `users/${adminuid}/student/${studentuid}`);
+
+            // Function to update profile data
+            const updateProfile = (newUsername, newPhonenumber, newBio) => {
+                update(userRef, {
+                    username: newUsername,
+                    phonenumber: newPhonenumber,
+                    bio: newBio
+                }).then(() => {
+                    console.log("Profile updated successfully!");
+                    alert("Profile updated successfully!");
+                    location.reload();
+                }).catch((error) => {
+                    console.error("Error updating profile:", error);
+                });
+            };
+
+            // Event listeners
+            document.getElementById('saveBtn').addEventListener('click', () => {
+                const newUsername = document.getElementById('usernameInp').value;
+                const newPhonenumber = document.getElementById('phonenumberInp').value;
+                const newBio = document.getElementById('bioInp').value;
+                updateProfile(newUsername, newPhonenumber, newBio);
+            });
+
+            document.getElementById('uploadBtn').addEventListener('click', () => {
+                const fileInput = document.getElementById('imageInp').files[0];
+                if (fileInput) {
+                    const storageReference = storageRef(storage, 'images/' + studentuid);
+                    uploadBytes(storageReference, fileInput)
+                        .then((snapshot) => {
+                            console.log('Uploaded a blob or file!');
+                            getDownloadURL(storageReference)
+                                .then((url) => {
+                                    document.getElementById('userImage').src = url;
+                                    document.getElementById('userImage').style.display = 'block';
+                                    update(userRef, { imageURL: url })
+                                        .then(() => {
+                                            console.log("Profile photo uploaded successfully!");
+                                            alert("Profile photo uploaded successfully!");
+                                            location.reload();
+                                        }).catch(error => {
+                                            console.error("Error uploading profile photo:", error);
+                                            alert("Failed to upload profile photo. Please try again.");
+                                        });
+                                }).catch((error) => {
+                                    console.error("Error getting download URL:", error);
+                                });
+                        }).catch((error) => {
+                            console.error("Error uploading file:", error);
+                        });
+                } else {
+                    console.log("No file selected");
+                }
+            });
+
+            // Listen for real-time updates to the user's data
+            onValue(userRef, (snapshot) => {
+                const userData = snapshot.val();
+                if (userData) {
+                    document.getElementById('emailInp').value = userData.email || "-";
+                    document.getElementById('usernameInp').value = userData.username || "-";
+                    document.getElementById('phonenumberInp').value = userData.phonenumber || "-";
+                    document.getElementById('bioInp').value = userData.bio || "-";
+                    const imageURL = userData.imageURL;
+                    if (imageURL) {
+                        document.getElementById('userImage').src = imageURL;
+                        document.getElementById('userImage').style.display = 'block';
+                    } else {
+                        document.getElementById('userImage').src = '';
+                        document.getElementById('userImage').style.display = 'none';
+                    }
+                } else {
+                    console.log("No data available for the specified UID");
+                    document.getElementById('emailInp').value = "-";
+                    document.getElementById('usernameInp').value = "-";
+                    document.getElementById('phonenumberInp').value = "-";
+                    document.getElementById('bioInp').value = "-";
+                    document.getElementById('userImage').src = '';
+                    document.getElementById('userImage').style.display = 'none';
+                }
+            }, (error) => {
+                console.error("Error fetching user data:", error);
+            });
+
+
+
+
+
+
+
+
+
+        // Courses
+        const coursesListDiv = document.getElementById('courseslist');
+
+        function displayCourses() {
+            const userCoursesRef = ref(database, `users/${adminuid}/courses`);
+
+            onValue(userCoursesRef, (snapshot) => {
+                const coursesData = snapshot.val();
+
+                if (coursesData) {
+                    const coursesArray = Object.entries(coursesData);
+
+                    const coursesHTML = coursesArray.map(([key, course]) => `
+                        <div class="course-container" data-course-id="${key}">
+                            <div class="course-name">${course.coursename}</div>
+                        </div>
+                    `).join('');
+
+                    coursesListDiv.innerHTML = coursesHTML;
+
+                    // Add click event listener to each course container
+                    const courseContainers = document.querySelectorAll('.course-container');
+                    courseContainers.forEach(container => {
+                        container.addEventListener('click', () => {
+                            const courseId = container.getAttribute('data-course-id');
+                            if (courseId) {
+                                // Save course ID in local storage
+                                localStorage.setItem('student-selected-course-id', JSON.stringify(courseId));
+                                console.log(`Course ID ${courseId} saved in local storage.`);
+
+                                // Trigger click event on anchor tag
+                                const moduleLink = document.querySelector('a[href="#module"]');
+                                if (moduleLink) {
+                                    moduleLink.click();
+                                    location.reload();
+                                }
+                            }
+                        });
+                    });
+                } else {
+                    coursesListDiv.innerHTML = '<p>No courses found.</p>';
+                }
+            }, {
+                onlyOnce: true // This ensures it fetches the data only once initially
+            });
+        }
+
+        displayCourses();
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //Module
+        const moduleListDiv = document.getElementById('modulelist');
+
+        // Function to get scid from local storage
+        function getScidFromLocalStorage() {
+            const storedScid = localStorage.getItem('student-selected-course-id');
+            if (storedScid) {
+                try {
+                    const scid = JSON.parse(storedScid);
+                    console.log(`Retrieved scid from local storage: ${scid}`);
+                    return scid;
+                } catch (error) {
+                    console.error('Error parsing scid from local storage:', error);
+                    return null;
+                }
+            } else {
+                console.log('No scid found in local storage.');
+                return null;
+            }
+        }
+
+        // Function to display modules
+        function displayModule() {
+            const scid = getScidFromLocalStorage(); 
+            if (!scid) {
+                console.log('No scid available, unable to fetch modules.');
+                return;
+            }
+            const userModuleRef = ref(database, `users/${adminuid}/courses/${scid}/module`);
+
+            onValue(userModuleRef, (snapshot) => {
+                const moduleData = snapshot.val();
+
+                if (moduleData) {
+                    const moduleArray = Object.entries(moduleData);
+
+                    const moduleHTML = moduleArray.map(([key, module]) => `
+                        <div class="module-container" data-module-id="${key}">
+                            <div class="module-name">${module.modulename}</div>
+                        </div>
+                    `).join('');
+
+                    moduleListDiv.innerHTML = moduleHTML;
+
+                    // Add click event listener to each module container
+                    const moduleContainers = document.querySelectorAll('.module-container');
+                    moduleContainers.forEach(container => {
+                        container.addEventListener('click', () => {
+                            const moduleId = container.getAttribute('data-module-id');
+                            if (moduleId) {
+                                // Save module ID in local storage
+                                localStorage.setItem('student-selected-module-id', JSON.stringify(moduleId));
+                                console.log(`Module ID ${moduleId} saved in local storage.`);
+
+                                // Trigger click event on anchor tag
+                                const moduleLink = document.querySelector('a[href="#file"]');
+                                if (moduleLink) {
+                                    moduleLink.click();
+                                    location.reload();
+                                }
+                            }
+                        });
+                    });
+
+                } else {
+                    moduleListDiv.innerHTML = '<p>No modules found.</p>';
+                }
+            }, {
+                onlyOnce: true // This ensures it fetches the data only once initially
+            });
+        }
+
+
+        // Call the function to display module initially
+        displayModule();
+
+
+
+
+
+
+
+
+
+
+        // Files
+        const fileListDiv = document.getElementById('fileList');
+
+        // Function to get scid from local storage
+        function getScid2FromLocalStorage() {
+            const storedScid = localStorage.getItem('student-selected-course-id');
+            if (storedScid) {
+                try {
+                    const scid = JSON.parse(storedScid);
+                    console.log(`Retrieved scid from local storage: ${scid}`);
+                    return scid;
+                } catch (error) {
+                    console.error('Error parsing scid from local storage:', error);
+                    return null;
+                }
+            } else {
+                console.log('No scid found in local storage.');
+                return null;
+            }
+        }
+
+        // Function to get mcid from local storage
+        function getMcidFromLocalStorage() {
+            const storedMcid = localStorage.getItem('student-selected-module-id');
+            if (storedMcid) {
+                try {
+                    const mcid = JSON.parse(storedMcid);
+                    console.log(`Retrieved mcid from local storage: ${mcid}`);
+                    return mcid;
+                } catch (error) {
+                    console.error('Error parsing mcid from local storage:', error);
+                    return null;
+                }
+            } else {
+                console.log('No mcid found in local storage.');
+                return null;
+            }
+        }
+
+        // Function to fetch and display files
+        function displayFiles() {
+            const scid = getScid2FromLocalStorage(); 
+            const mcid = getMcidFromLocalStorage(); 
+
+            if (!mcid || !scid) {
+                console.error('scid or mcid not found.');
+                return;
+            }
+
+            const filesRef = ref(database, `users/${adminuid}/courses/${scid}/module/${mcid}/files`);
+
+            // Listen for changes in files data
+            onValue(filesRef, (snapshot) => {
+                fileListDiv.innerHTML = ''; // Clear previous content
+
+                snapshot.forEach((childSnapshot) => {
+                    const fileData = childSnapshot.val();
+                    const fileKey = childSnapshot.key;
+
+                    // Create HTML elements for displaying file
+                    const fileDiv = document.createElement('div');
+                    fileDiv.classList.add('file-item');
+
+                    const fileTitle = document.createElement('h3');
+                    fileTitle.textContent = fileData.filename || 'Untitled';
+
+                    const fileLink = document.createElement('a');
+                    fileLink.href = fileData.url || '#'; // Default to '#' if url is missing
+                    fileLink.textContent = 'Open';
+                    fileLink.id = 'openBtn';
+                    fileLink.target = '_blank'; // Open link in a new tab
+
+                    fileDiv.appendChild(fileTitle);
+                    fileDiv.appendChild(fileLink);
+
+                    fileListDiv.appendChild(fileDiv);
+                });
+            });
+        }
+
+        // Initial display of files
+        displayFiles();
+
+
+
+
+
+
+
+
+
+        // Calendar
+        const userEventsRef = ref(database, 'users/' + adminuid + '/calendars/events');
+
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            editable: true,
+            selectable: true,
+            events: function (fetchInfo, successCallback, failureCallback) {
+                onValue(userEventsRef, (snapshot) => {
+                    const events = [];
+                    snapshot.forEach(childSnapshot => {
+                        const event = childSnapshot.val();
+                        event.id = childSnapshot.key; // Add the ID to the event
+                        events.push(event);
+                    });
+                    successCallback(events);
+                });
+            },
+        });
+
+        calendar.render();
+
+
+
+
+
+
+
+
+
+
+
+        // Quiz
+        const coursesQuizListDiv = document.getElementById('coursesquizlist');
+
+        function displayCoursesQuiz() {
+            const userCoursesRef = ref(database, `users/${adminuid}/courses`);
+
+            onValue(userCoursesRef, (snapshot) => {
+                const coursesQuizData = snapshot.val();
+
+                if (coursesQuizData) {
+                    const coursesQuizArray = Object.entries(coursesQuizData);
+
+                    const coursesQuizHTML = coursesQuizArray.map(([key, course]) => `
+                        <div class="course-container" data-course-quiz-id="${key}" data-course-name="${course.coursename}">
+                            <div class="course-name">${course.coursename}</div>
+                        </div>
+                    `).join('');
+
+                    coursesQuizListDiv.innerHTML = coursesQuizHTML;
+
+                    // Add click event listener to each course container
+                    const courseQuizContainers = document.querySelectorAll('#coursesquizlist .course-container');
+                    courseQuizContainers.forEach(container => {
+                        container.addEventListener('click', () => {
+                            const coursequizId = container.getAttribute('data-course-quiz-id');
+                            const courseName = container.getAttribute('data-course-name');
+
+                            if (coursequizId) {
+                                // Save course ID and course name in local storage
+                                localStorage.setItem('student-selected-course-quiz-id', JSON.stringify(coursequizId));
+                                localStorage.setItem('student-selected-course-quiz-id-name', JSON.stringify(courseName));
+                                console.log(`Course ID ${coursequizId} and Course Name ${courseName} saved in local storage.`);
+
+                                // Trigger click event on anchor tag
+                                const quizLink = document.querySelector('a[href="#quiz"]');
+                                if (quizLink) {
+                                    quizLink.click();
+                                    location.reload();
+                                }
+                            }
+                        });
+                    });
+                } else {
+                    coursesQuizListDiv.innerHTML = '<p>No courses quiz available.</p>';
+                }
+            });
+        }
+
+        // Call the function to display course quizzes initially
+        displayCoursesQuiz();
+
+
+
+
+
+
+
+
+
+
+        // Quiz module
+        const quizListDiv = document.getElementById('coursesquizlist2');
+
+
+        // Function to get scid from local storage
+        function getScid3FromLocalStorage() {
+            const storedscid = localStorage.getItem('student-selected-course-quiz-id');
+            if (storedscid) {
+                try {
+                    const scid = JSON.parse(storedscid);
+                    console.log(`Retrieved scid from local storage: ${scid}`);
+                    return scid;
+                } catch (error) {
+                    console.error('Error parsing scid from local storage:', error);
+                    return null;
+                }
+            } else {
+                console.log('No scid found in local storage.');
+                return null;
+            }
+        }
+
+        // Function to fetch and display files
+        function displayQuiz() {
+            const scid3 = getScid3FromLocalStorage(); 
+
+            // Check if scid3 is not found, and log an error message
+            if (!scid3) {
+                console.error('scid not found.');
+                return;
+            }
+
+            const userQuizRef = ref(database, `users/${adminuid}/courses/${scid3}/quiz`);
+
+            onValue(userQuizRef, (snapshot) => {
+                const quizData = snapshot.val();
+
+                if (quizData) {
+                    const quizArray = Object.entries(quizData);
+
+                    const quizHTML = quizArray.map(([key, quiz]) => 
+                        `<div class="quiz-container" data-quiz-id="${key}" data-quiz-name="${quiz.quizname}">
+                            <div class="quiz-name">${quiz.quizname}</div>
+                        </div>`
+                    ).join('');
+
+                    quizListDiv.innerHTML = quizHTML;
+
+                    // Add click event listener to each quiz container
+                    const quizContainers = document.querySelectorAll('.quiz-container');
+                    quizContainers.forEach(container => {
+                        container.addEventListener('click', () => {
+                            const quizId = container.getAttribute('data-quiz-id');
+                            const quizName = container.getAttribute('data-quiz-name');
+                            if (quizId && quizName) {
+                                // Save quiz ID and quiz name in local storage
+                                localStorage.setItem('student-selected-quiz-id', JSON.stringify({ quizId, quizName }));
+                                console.log(`Quiz ID ${quizId} and name "${quizName}" saved in local storage.`);
+
+                                // Trigger click event on anchor tag
+                                const quizLink = document.querySelector('a[href="#filequiz"]');
+                                if (quizLink) {
+                                    quizLink.click();
+                                    location.reload();
+                                }
+                            }
+                        });
+                    });
+
+                } else {
+                    quizListDiv.innerHTML = '<p>No quizzes found.</p>';
+                }
+            }, {
+                onlyOnce: true // This ensures it fetches the data only once initially
+            });
+        }
+
+        // Call the function to display quiz initially
+        displayQuiz();
+
+
+
+
+
+
+
+
+
+                
+        
+        
+        // Retrieve scid3 from local storage
+        const answerForm = document.getElementById('answer-form');
+        const quizContainer = document.getElementById('quiz-container');
+        const answersContainer = document.getElementById('answers-container');
+        const scid3 = JSON.parse(localStorage.getItem('student-selected-course-quiz-id'));
+        const storedData = JSON.parse(localStorage.getItem('student-selected-quiz-id'));
+        const scid4 = storedData ? storedData.quizId : null;
+        const quizname = storedData ? storedData.quizName : null;
+        const quizcoursename = JSON.parse(localStorage.getItem('student-selected-course-quiz-id-name'));
+
+        if (!scid3 || !scid4 || !quizcoursename) {
+            console.error('Course ID or Quiz ID not found in local storage.');
+            return;
+        }
+
+        let quizzesData = {};
+
+        // Get quizzes from the database
+        const quizzesRef = ref(database, `users/${adminuid}/courses/${scid3}/quiz/${scid4}/quizzes`);
+        onValue(quizzesRef, (snapshot) => {
+            quizContainer.innerHTML = '';
+            quizzesData = {}; // Reset quizzesData
+            snapshot.forEach((childSnapshot) => {
+                const quiz = childSnapshot.val();
+                const quizKey = childSnapshot.key;
+                quizzesData[quizKey] = quiz;
+
+                // Debugging log
+                console.log(`Quiz Key: ${quizKey}, Quiz Data:`, quiz);
+
+                if (quiz && quiz.choices && quiz.choices.length === 4) {
+                    const quizElement = document.createElement('div');
+                    quizElement.className = 'quiz-question';
+                    quizElement.innerHTML = `
+                        <p class="quiz-question-text">${quiz.question}</p>
+                        <ul class="quiz-choices">
+                            ${quiz.choices.map((choice, index) => `
+                                <li class="quiz-choice" style="word-wrap: break-word;">
+                                    <input type="radio" name="quiz_${quizKey}" value="${index}" required> ${choice}
+                                </li>
+                            `).join('')}
+                        </ul>
+                    `;
+                    quizContainer.appendChild(quizElement);
+                } else {
+                    console.error(`Quiz with key ${quizKey} is invalid or choices are missing.`);
+                }
+            });
+
+            // Debugging log
+            console.log(`Total quizzes loaded: ${Object.keys(quizzesData).length}`);
+        });
+
+        answerForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const studentCreds = JSON.parse(localStorage.getItem('student-creds'));
+            const name = studentCreds.username;
+            const answers = [];
+            let correctAnswersCount = 0;
+
+            quizContainer.querySelectorAll('input[type="radio"]:checked').forEach(input => {
+                const quizKey = input.name.replace('quiz_', '');
+                const answer = parseInt(input.value);
+                answers.push({ quizKey, answer });
+
+                // Debugging logs
+                console.log(`Quiz Key: ${quizKey}, User Answer: ${answer}, Correct Answer: ${quizzesData[quizKey]?.correctAnswer}`);
+
+                // Check if the answer is correct
+                if (quizzesData[quizKey] && parseInt(quizzesData[quizKey].correctAnswer) === answer) {
+                    correctAnswersCount++;
+                }
+            });
+
+            const totalQuestions = answers.length;
+            const percentage = totalQuestions > 0 ? (correctAnswersCount / totalQuestions) * 100 : 0;
+
+            // Debugging logs
+            console.log(`Total Questions: ${totalQuestions}`);
+            console.log(`Correct Answers Count: ${correctAnswersCount}`);
+            console.log(`Percentage: ${percentage}`);
+
+            const userAnswersRef = push(ref(database, `users/${adminuid}/student/${studentuid}/answer`));
+            set(userAnswersRef, {
+                name: name,
+                answers: answers,
+                percentage: percentage,
+                quizname: quizname,
+                quizcoursename: quizcoursename,
+            }).then(() => {
+                alert('Answers submitted successfully!');
+                displayAnswers(name, answers, percentage); // Display answers immediately after submission
+                answerForm.reset();
+            }).catch(error => {
+                console.error('Error submitting answers:', error);
+            });
+        });
+
+function displayAnswers(name, answers, percentage) {
+    answersContainer.innerHTML = `<h3 class="answers-header">Answers</h3>`;
+    answers.forEach(({ quizKey, answer }) => {
+        const quiz = quizzesData[quizKey];
+        if (quiz) {
+            const answerElement = document.createElement('div');
+            answerElement.className = 'answer-element';
+            answerElement.innerHTML = `
+                <div class="question-section">
+                    <strong>Question:</strong> <span>${quiz.question}</span>
+                </div>
+                <div class="answer-section">
+                    <strong>Your Answer:</strong> <span>${quiz.choices[answer]}</span>
+                </div>
+                <div class="correct-answer-section">
+                    <strong>Correct Answer:</strong> <span>${quiz.choices[quiz.correctAnswer]}</span>
+                </div>
+            `;
+            answersContainer.appendChild(answerElement);
+        } else {
+            console.error(`Quiz data for key ${quizKey} not found.`);
+        }
+    });
+    if (typeof percentage === 'number') {
+        const percentageElement = document.createElement('div');
+        percentageElement.className = 'percentage-element';
+        percentageElement.innerHTML = `<strong>Last Score:</strong> ${percentage.toFixed(2)}%`;
+        answersContainer.appendChild(percentageElement);
+    }
+}
+
+// Retrieve and display all user answers
+const userAnswersRef = ref(database, `users/${adminuid}/student/${studentuid}/answer`);
+onValue(userAnswersRef, (snapshot) => {
+    answersContainer.innerHTML = '';
+    snapshot.forEach((childSnapshot) => {
+        const userAnswer = childSnapshot.val();
+        displayAnswers(userAnswer.name, userAnswer.answers, userAnswer.percentage);
+    });
+});
+
+
+
+        } else {
+            console.error('User not authenticated or UID not found.');
+        }
+    });
+</script>
+
+
+</html>
