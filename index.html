@@ -3,43 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Home</title>
+    <link rel="stylesheet" href="styles2.css" />
+
 </head>
-
 <body>
-    <div class="background"></div>
-    <div class="parentmaincontainer">
-        <div class="maincontainer" id="home">
-            <img src="logo2.png" alt="" />
-            <form id="homeForm">
-                <button type="button" id="loginBtn">Login</button>
-                <button type="button" id="studentloginBtn">Student Login</button>
-            </form>
-        </div>
+
+<header>
+    <div class="logo">
+        <img src="logo2.png" alt="Logo">
     </div>
+    <div class="buttons">
+        <button onclick="window.location.href='signup.html'">Register Admin</button>
+        <button onclick="window.location.href='loginuser.html'">Login Admin</button>
+        <button onclick="window.location.href='loginstudent.html'">Login Student</button>
+    </div>
+</header>
 
-    <script>
-        // Function to load user login page
-        function loadUserLogin(event) {
-            event.preventDefault();
-            window.location.href = 'loginuser.html';
-        }
+<div class="background"></div>
+<div class="introcontainer">
+    <img src="intro.png" alt="Intro Image">
+</div>
 
-        // Function to load student login page
-        function loadStudentLogin(event) {
-            event.preventDefault();
-            window.location.href = 'loginstudent.html';
-        }
+<div class="directpagecontainer">
+    <p>Already login?</p>
+    <button onclick="window.location.href='page1.html'">Admin</button>
+    <button onclick="window.location.href='page2.html'">Student</button>
+</div>
 
-        // Add event listeners to buttons after the DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            const loginBtn = document.getElementById('loginBtn');
-            const studentLoginBtn = document.getElementById('studentloginBtn');
+<div class="introtextcontainer">
+    <p>At the E-Education platform, we are committed to providing access to quality learning at your fingertips. A variety of courses and interactive modules are available to help you achieve professional skill success. Join our digital learning community and discover effective new ways to increase your knowledge and potential, anytime and anywhere.</p>
+</div>
 
-            loginBtn.addEventListener('click', loadUserLogin);
-            studentLoginBtn.addEventListener('click', loadStudentLogin);
-        });
-    </script>
 </body>
 </html>

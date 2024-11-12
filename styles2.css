@@ -1,0 +1,181 @@
+/* General reset */
+
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    background: url("background2.jpg") no-repeat center center/cover;
+    z-index: -1;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header styling */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #29292983;
+    color: white;
+}
+
+/* Logo styling */
+.logo img {
+    height: 50px; /* Default logo size */
+}
+
+/* Buttons container styling */
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Button styling */
+.buttons button {
+    padding: 8px 16px;
+    font-size: 1em;
+    background-color: #52525283;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.buttons button:hover {
+    background-color: #7070707e;
+}
+
+/* Medium screen: Tablets and smaller laptops */
+@media (max-width: 600px) {
+    .buttons button {
+        padding: 6px 12px; /* Smaller padding */
+        font-size: 0.9em;  /* Slightly smaller text */
+    }
+    .logo img {
+        height: 40px; /* Smaller logo */
+    }
+    
+}
+
+/* Small screen: Mobile phones */
+@media (max-width: 480px) {
+    .buttons button {
+        padding: 4px 8px; /* Even smaller padding */
+        font-size: 0.8em;  /* Smaller font size */
+    }
+    .logo img {
+        height: 35px; /* Even smaller logo */
+    }
+}
+
+/* Extra small screen: 375px width (e.g., iPhone X and similar) */
+@media (max-width: 375px) {
+    .buttons button {
+        padding: 3px 6px; /* Further reduced padding */
+        font-size: 0.75em;  /* Even smaller font size */
+    }
+    .logo img {
+        height: 30px; /* Smallest logo size */
+    }
+}
+
+/* Full-width image styling */
+.introcontainer {
+    width: 100vw;
+    margin-bottom: -65px;
+    margin-top: 30px;
+    overflow: hidden; /* Hide overflow to prevent scrollbars */
+}
+
+.introcontainer img {
+    width: 100%;
+    height: auto; /* Keeps the aspect ratio */
+    display: block; /* Removes any gap below the image */
+}
+
+/* Container styling */
+.directpagecontainer {
+    text-align: center;
+    padding: 20px;
+    background-color: #33333300; /* Dark background */
+    border-radius: 10px;
+    max-width: 1200px;
+    margin: 30px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Text styling */
+.directpagecontainer p {
+    font-size: 1.2em;
+    color: #fff; /* White text for contrast */
+    margin-bottom: 15px;
+}
+
+/* Button styling */
+.directpagecontainer button {
+    padding: 8px 20px;
+    margin: 15px;
+    font-size: 1em;
+    width: 40%; 
+    color: #fff; /* White text */
+    background-color: #007bff67; /* Default blue background */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Different background for each button */
+.directpagecontainer button:first-of-type {
+    background-color: #008a20b9; /* Admin button: green */
+}
+
+.directpagecontainer button:last-of-type {
+    background-color: #007486b2; /* Student button: teal */
+}
+
+
+.directpagecontainer button:hover {
+    background-color: #003e81;
+    transform: scale(1.05); /* Slightly enlarges on hover */
+}
+
+.directpagecontainer button:first-of-type:hover {
+    background-color: #019722b6; /* Darker green for hover on Admin */
+}
+
+.directpagecontainer button:last-of-type:hover {
+    background-color: #007e91ad; /* Darker teal for hover on Student */
+}
+
+.intro-image {
+    opacity: 1;
+    width: 100%;
+    height: auto;
+}
+
+
+.introtextcontainer {
+    padding: 20px 50px;
+    font-size: 1.6rem;
+    color: white;
+    margin-bottom: 30px;
+    text-align: center;
+    height: 350px; /* Set a fixed height */
+    overflow-y: scroll; /* Allow scrolling */
+    scrollbar-width: none; /* For Firefox */
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff00;
+    -ms-overflow-style: none; /* For Internet Explorer */
+}
+
+.introtextcontainer::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Edge */
+}
