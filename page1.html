@@ -1229,7 +1229,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (!cqid || !qid) {
         console.error('Course ID or Quiz ID not found in local storage.');
-        return;
     }
 
     const quizForm = document.getElementById('quiz-form');
@@ -1397,8 +1396,11 @@ function displayQuizResults() {
         if (data) {
             Object.keys(data).forEach(answerId => {
                 const result = data[answerId];
+                const percentage = result.percentage !== null && result.percentage !== undefined ? result.percentage + '%' : '';
+
+                // Create quiz result HTML with delete button
                 const quizResultHTML = `
-                    <div class="quiz-result-container">
+                    <div class="quiz-result-container" id="result-${answerId}">
                         <div class="sfield">
                             <label for="quizcoursename-${answerId}">Course:</label>
                             <input id="quizcoursename-${answerId}" type="text" value="${result.quizcoursename || ''}" readonly>
@@ -1409,18 +1411,51 @@ function displayQuizResults() {
                         </div>
                         <div class="sfield">
                             <label for="percentage-${answerId}">Percentage:</label>
-                            <input id="percentage-${answerId}" type="text" value="${result.percentage ? result.percentage + '%' : ''}" readonly>
+                            <input id="percentage-${answerId}" type="text" value="${percentage}" readonly>
                         </div>
+                        <button class="delete-button" data-answer-id="${answerId}">Delete</button>
                     </div>
                 `;
+                
                 quizResultContainer.innerHTML += quizResultHTML;
+            });
+
+            // Add event listeners to each delete button
+            const deleteButtons = quizResultContainer.querySelectorAll('.delete-button');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const answerId = button.getAttribute('data-answer-id');
+                    // Confirm deletion
+                    if (confirm("Are you sure you want to delete this quiz result?")) {
+                        deleteAnswer(answerId);
+                    }
+                });
             });
         }
     });
 }
 
+// Function to delete a specific answerId from the database
+function deleteAnswer(answerId) {
+    const answerRef = ref(database, `users/${uid2}/student/${suid}/answer/${answerId}`);
+    remove(answerRef)
+        .then(() => {
+            // Optionally, remove the result from the DOM
+            const resultElement = document.getElementById(`result-${answerId}`);
+            if (resultElement) {
+                resultElement.remove();
+            }
+            console.log(`Answer ${answerId} deleted successfully.`);
+        })
+        .catch((error) => {
+            console.error("Error deleting answer:", error);
+        });
+}
+
 // Call the function to display quiz results
 displayQuizResults();
+
+
 
 
 
